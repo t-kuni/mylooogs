@@ -1,10 +1,10 @@
 <template>
   <div>
     <div>mylooogs 一覧</div>
-    <div v-for="log in logs">
-      <div>{{log.name}}</div>
+    <div v-for="log in logs" :key="log.id">
+      <router-link :to="{ name: 'log_editing', params: { logId: log.id }}">{{log.name}}</router-link>
     </div>
-    <router-link to="edit">新規</router-link>
+    <router-link :to="{ name: 'log_creating' }">新規</router-link>
   </div>
 </template>
 

@@ -1,6 +1,7 @@
 import TopPage from './components/pages/TopPage'
 import ListPage from './components/pages/ListPage'
-import EditPage from './components/pages/EditPage'
+import LogCreatingPage from "./components/pages/LogCreatingPage";
+import LogEditingPage from "./components/pages/LogEditingPage";
 
 export default [
     {
@@ -14,8 +15,13 @@ export default [
         component: ListPage,
     },
     {
-        path: '/edit',
-        name: 'edit',
-        component: EditPage,
+      path: '/log/create',
+      name: 'log_creating',
+      component: LogCreatingPage,
+    },
+    {
+        path: '/log/:logId/edit',
+        name: 'log_editing',
+        component: LogEditingPage,
     },
 ]
