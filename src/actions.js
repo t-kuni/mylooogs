@@ -1,5 +1,6 @@
 import {MUTATION} from "./mutations";
 import {STATE} from "./state";
+import api from './api';
 import router from './router'
 
 export const ACTION = {
@@ -80,5 +81,11 @@ export default {
   },
 
   [ACTION.SAVE_LOG]: ({commit, getters, state}, payload) => {
+    const fields = payload.fields;
+
+    api.saveLog({
+      createdAt: (new Date()).toISOString(),
+      fields,
+    });
   },
 }

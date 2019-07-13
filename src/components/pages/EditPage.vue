@@ -41,6 +41,7 @@
   import BField from "buefy/src/components/field/Field.vue";
   import BInput from "buefy/src/components/input/Input.vue";
   import BButton from "buefy/src/components/button/Button.vue";
+  import {ACTION} from '../../actions'
 
   export default {
     components: {BButton, BInput, BField},
@@ -102,7 +103,9 @@
       },
 
       onClickSave() {
-
+        this.$store.dispatch(ACTION.SAVE_LOG, {
+          fields: this.fields,
+        })
       }
     }
   }
