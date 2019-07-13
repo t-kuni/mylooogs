@@ -6,7 +6,8 @@ import './registerServiceWorker'
 //@ts-ignore
 import {ACTION} from './actions';
 import Buefy from 'buefy'
-import 'buefy/dist/buefy.css'
+import '@fortawesome/fontawesome-free/js/all';
+import './scss/app.scss';
 
 Vue.use(Buefy)
 

@@ -1,0 +1,38 @@
+// ↓↓↓↓　アプリケーションテーマ ↓↓↓↓
+$choice-b-color: #4040E3;
+$choice-a-color: #E34040;
+//$base-color: #FCFCFC;
+$base-color: #f7f7f7;
+$base-border-color: #CACCCC;
+$accent-color: #2387DE;
+$accent-border-color: #1B66A8;
+$main-color: #FFFFFF;
+$sub-color: #81CF65;
+$border-color: #707070;
+$control-icon-color: #666666;
+//$text-color: #101010;
+$text-color: #24243f;
+$focus-color: #FFFFCC;
+
+
+$primary:       $accent-color;
+$secondary:     $base-border-color;
+$success:       $sub-color;
+//$info:          $cyan;
+//$warning:       $yellow;
+$danger:        $choice-a-color;
+//$light:         $gray-100;
+//$dark:          $gray-800;
+
+$font-size-largest: 2.4rem;
+$font-size-large: 2.1rem;
+$font-size-medium: 1.8rem;
+$font-size-small: 1.5rem;
+$font-size-smallest: 1.2rem;
+
+$font-family: "Open Sans","Noto Sans Japanese","メイリオ",sans-serif;
+// ↑↑↑↑　アプリケーションテーマ　↑↑↑↑
+
+
+// Body
+$body-bg: $base-color;

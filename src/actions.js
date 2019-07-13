@@ -76,9 +76,9 @@ export default {
   },
 
   [ACTION.SIGN_IN_COMPLETED]: ({commit, getters, state, dispatch}, payload) => {
-    // router.push('/list');
-
     dispatch(ACTION.LOAD_LOGS);
+
+    router.push('/list');
   },
 
   [ACTION.SIGN_OUT_COMPLETED]: ({commit, getters, state}, payload) => {

@@ -1,0 +1,16 @@
+@import "~bulma/sass/utilities/_all";
+@import 'variables';
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  color: $text-color;
+  font-size: $font-size-medium;
+  font-family: $font-family;
+}
+
+
+@import "~bulma";
+@import "~buefy/src/scss/buefy";

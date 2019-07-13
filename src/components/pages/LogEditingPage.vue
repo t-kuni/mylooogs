@@ -1,37 +1,61 @@
 <template>
   <div>
-    <div>mylooogs 編集画面</div>
+    <ex-header class="header"></ex-header>
 
-    <div class="container" v-for="field in fields" :key="field.no">
-      <template v-if="field.isDefining">
-        <b-field label="項目名">
-          <b-input maxlength="200" type="text" v-model="field.title"></b-input>
-        </b-field>
-        <div class="level">
-          <div class="level-left"></div>
-          <div class="level-right">
-            <div class="level-item">
-                  <b-button type="is-light" @click="onCancelDefinition(field.no)">キャンセル</b-button>
-            </div>
-            <div class="level-item">
-              <b-button type="is-success" @click="onClickDefine(field.no)">確定</b-button>
-            </div>
+    <main>
+      <div class="container" v-for="field in fields" :key="field.no">
+
+        <!-- 定義編集中 -->
+        <template v-if="field.isDefining">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                <b-input placeholder="項目名" maxlength="200" type="text" expanded v-model="field.title"></b-input>
+              </p>
+            </header>
+            <footer class="card-footer">
+              <a href="#" class="card-footer-item" @click="onCancelDefinition(field.no)">キャンセル</a>
+              <a href="#" class="card-footer-item" @click="onClickDefine(field.no)">確定</a>
+            </footer>
           </div>
+        </template>
+
+        <!-- 定義確定後 -->
+        <template v-else>
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                {{field.title}}
+              </p>
+            </header>
+            <div class="card-content">
+              <div class="content">
+                <b-input maxlength="200" type="textarea" v-model="field.payload.value"></b-input>
+              </div>
+            </div>
+            <footer class="card-footer">
+              <a href="#" class="card-footer-item">Save</a>
+              <a href="#" class="card-footer-item">Edit</a>
+              <a href="#" class="card-footer-item">Delete</a>
+            </footer>
+          </div>
+        </template>
+      </div>
+    </main>
+
+    <div class="container add-field-button-area">
+      <div class="button" @click="onClickAddField">
+        <i class="fas fa-plus-circle"></i>
+        追加
+      </div>
+    </div>
+
+    <div class="tool-area">
+      <div class="container">
+        <div class="save-button is-pulled-right">
+          <i class="far fa-save" @click="onClickSave"></i>
         </div>
-      </template>
-      <template v-else>
-        <b-field :label="field.title">
-          <b-input maxlength="200" type="textarea" v-model="field.payload.value"></b-input>
-        </b-field>
-      </template>
-    </div>
-
-    <div class="container">
-      <b-button type="is-primary" outlined @click="onClickAddField">追加</b-button>
-    </div>
-
-    <div>
-      <b-button type="is-primary" @click="onClickSave">保存</b-button>
+      </div>
     </div>
   </div>
 </template>
@@ -43,9 +67,10 @@
   import BButton from "buefy/src/components/button/Button.vue";
   import {ACTION} from '../../actions'
   import {STATE} from '../../state'
+  import ExHeader from "../organisms/ExHeader";
 
   export default {
-    components: {BButton, BInput, BField},
+    components: {ExHeader, BButton, BInput, BField},
     mounted() {
     },
     beforeRouteEnter(to, from, next) {
@@ -57,8 +82,7 @@
     },
     props     : {},
     data      : function () {
-      return {
-      }
+      return {}
     },
     computed  : {
       logID() {
@@ -86,7 +110,7 @@
             return field;
           }
 
-          field.payload = {
+          field.payload    = {
             value: '',
           };
           field.isDefining = false;
@@ -104,16 +128,60 @@
       onClickSave() {
         this.$store.dispatch(ACTION.SAVE_LOG, {
           fields: this.fields,
-          logID: this.logID,
+          logID : this.logID,
         })
       }
     }
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+  @import "../../scss/variables";
+
+  .header {
+    margin-top: 1rem;
+    margin-left: 1rem;
+  }
+
+  main {
+  }
+
+  .card {
+    margin-top: 1rem;
+  }
+
   .field {
     border: 1px solid #555;
+  }
+
+  .add-field-button-area {
+    margin-top: 1rem;
+
+    .button {
+      display: block;
+    }
+  }
+
+  .tool-area {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
+    .save-button {
+      $size: 80px;
+
+      width: $size;
+      height: $size;
+      line-height: $size;
+      border-radius: 50%;
+      background-color: #FF3636;
+      color: white;
+      font-size: 2rem;
+      text-align: center;
+      cursor: pointer;
+
+      margin-bottom: 1rem;
+      margin-right: 1rem;
+    }
   }
 </style>

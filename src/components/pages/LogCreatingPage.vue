@@ -51,20 +51,6 @@
     data      : function () {
       return {
         fields: [
-          {
-            no     : 1,
-            type   : 'text',
-            title  : 'プライベート',
-            payload: {
-              value: '文章文章文章文章文章文章文章文章文章文章文章文章文章文章',
-            }
-          },
-          {
-            no        : 2,
-            isDefining: true,
-            type      : 'text',
-            title     : null,
-          }
         ]
       }
     },
@@ -111,8 +97,9 @@
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+  @import "../../scss/variables";
+
   .field {
     border: 1px solid #555;
   }

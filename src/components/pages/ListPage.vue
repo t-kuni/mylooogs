@@ -1,36 +1,97 @@
 <template>
   <div>
-    <div>mylooogs 一覧</div>
-    <div v-for="log in logs" :key="log.id">
-      <router-link :to="{ name: 'log_editing', params: { logID: log.id }}">{{log.name}}</router-link>
+    <ex-header class="header"></ex-header>
+
+    <main>
+      <div class="container" v-for="log in logs" :key="log.id">
+        <router-link :to="{ name: 'log_editing', params: { logID: log.id }}">
+          <div class="card">
+            <div class="card-content">
+              <div class="content">
+                {{log.name}}
+              </div>
+            </div>
+          </div>
+        </router-link>
+      </div>
+    </main>
+
+    <div class="tool-area">
+      <div class="container">
+        <router-link :to="{ name: 'log_creating' }" class="create-button is-pulled-right">
+          <i class="fas fa-plus"></i>
+        </router-link>
+      </div>
     </div>
-    <router-link :to="{ name: 'log_creating' }">新規</router-link>
   </div>
 </template>
 
 <script>
   import {ACTION} from "./../../actions";
   import {STATE} from "./../../state";
+  import ExHeader from "../organisms/ExHeader";
 
   export default {
-    components: {},
+    components: {ExHeader},
     mounted() {
     },
+    // beforeRouteEnter(to, from, next) {
+    //   next((vm) => {
+    //     vm.$store.dispatch(ACTION.LOAD_LOGS);
+    //   });
+    // },
+    // beforeRouteUpdate(to, from, next) {
+    //   next();
+    //   this.$store.dispatch(ACTION.LOAD_LOGS);
+    // },
     props     : {},
     data      : function () {
-      return {
-      }
+      return {}
     },
     computed  : {
       logs() {
         return this.$store.state[STATE.LOGS];
       }
     },
-    methods   : {
-    }
+    methods   : {}
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+  @import "../../scss/variables";
+
+  .header {
+    margin-top: 1rem;
+    margin-left: 1rem;
+  }
+
+  main {
+    margin-top: 1rem;
+  }
+
+  .content {
+    font-size: $font-size-medium;
+  }
+
+  .tool-area {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
+    .create-button {
+      $size: 80px;
+
+      width: $size;
+      height: $size;
+      line-height: $size;
+      border-radius: 50%;
+      background-color: #FF3636;
+      color: white;
+      font-size: 2rem;
+      text-align: center;
+
+      margin-bottom: 1rem;
+      margin-right: 1rem;
+    }
+  }
 </style>
