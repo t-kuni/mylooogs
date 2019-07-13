@@ -1,7 +1,7 @@
 export const STATE = {
-    AUTH_USER: 'auth_user',
+    LOGS: 'logs',
 };
 
 export const defaultState = {
-    [STATE.AUTH_USER]: null,
+    [STATE.LOGS]: [],
 };

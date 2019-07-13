@@ -13,6 +13,7 @@ export const ACTION = {
   SIGN_OUT_COMPLETED: 'sign_out_completed',
 
   SAVE_LOG: 'save_log',
+  LOAD_LOGS: 'load_logs',
 };
 
 export default {
@@ -72,8 +73,10 @@ export default {
     return gapi.auth2.getAuthInstance().signOut();
   },
 
-  [ACTION.SIGN_IN_COMPLETED]: ({commit, getters, state}, payload) => {
-    router.push('/list');
+  [ACTION.SIGN_IN_COMPLETED]: ({commit, getters, state, dispatch}, payload) => {
+    // router.push('/list');
+
+    dispatch(ACTION.LOAD_LOGS);
   },
 
   [ACTION.SIGN_OUT_COMPLETED]: ({commit, getters, state}, payload) => {
@@ -88,4 +91,13 @@ export default {
       fields,
     });
   },
+
+  [ACTION.LOAD_LOGS]: ({commit, getters, state}, payload) => {
+    api.loadLogs().then((response) => {
+      console.log(response);
+      commit(MUTATION.PUSH_LOGS, {
+        files: response.result.files
+      })
+    });
+  }
 }

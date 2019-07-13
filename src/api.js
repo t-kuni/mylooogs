@@ -6,10 +6,11 @@ export default {
 
     const fileContent = log; // As a sample, upload a text file.
     const file        = new Blob([fileContent], {type: 'text/plain'});
+    const fileName = 'log-' + log.createdAt;
     const metadata    = {
-      'name'    : 'sampleName', // Filename at Google Drive
-      'mimeType': 'application/json', // mimeType at Google Drive
-      'parents' : ['appDataFolder'], // Folder ID at Google Drive
+      'name'    : fileName,
+      'mimeType': 'application/json',
+      'parents' : ['appDataFolder'],
     };
 
     const accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
@@ -27,4 +28,12 @@ export default {
     };
     xhr.send(form);
   },
+
+  loadLogs() {
+    return gapi.client.drive.files.list({
+      spaces: 'appDataFolder',
+      fields: 'nextPageToken, files(id, name)',
+      pageSize: 10
+    })
+  }
 };
