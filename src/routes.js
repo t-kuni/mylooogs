@@ -20,7 +20,7 @@ export default [
       component: LogCreatingPage,
     },
     {
-        path: '/log/:logId/edit',
+        path: '/log/:logID/edit',
         name: 'log_editing',
         component: LogEditingPage,
     },

@@ -14,6 +14,8 @@ export const ACTION = {
 
   SAVE_LOG: 'save_log',
   LOAD_LOGS: 'load_logs',
+
+  LOAD_LOG_BODY: 'load_log_body',
 };
 
 export default {
@@ -85,11 +87,12 @@ export default {
 
   [ACTION.SAVE_LOG]: ({commit, getters, state}, payload) => {
     const fields = payload.fields;
+    const logID = 'logID' in payload ? payload.logID : null;
 
     api.saveLog({
       createdAt: (new Date()).toISOString(),
       fields,
-    });
+    }, logID);
   },
 
   [ACTION.LOAD_LOGS]: ({commit, getters, state}, payload) => {
@@ -97,6 +100,16 @@ export default {
       console.log(response);
       commit(MUTATION.PUSH_LOGS, {
         files: response.result.files
+      })
+    });
+  },
+
+  [ACTION.LOAD_LOG_BODY]: ({commit, getters, state}, payload) => {
+    const logID = payload.logID;
+
+    api.loadLog(logID).then((response) => {
+      commit(MUTATION.SET_LOG_EDITING_PAGE_LOG, {
+        log: response.result
       })
     });
   }

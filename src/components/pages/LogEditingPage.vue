@@ -42,33 +42,32 @@
   import BInput from "buefy/src/components/input/Input.vue";
   import BButton from "buefy/src/components/button/Button.vue";
   import {ACTION} from '../../actions'
+  import {STATE} from '../../state'
 
   export default {
     components: {BButton, BInput, BField},
     mounted() {
     },
+    beforeRouteEnter(to, from, next) {
+      next((vm) => {
+        vm.$store.dispatch(ACTION.LOAD_LOG_BODY, {
+          logID: vm.logID,
+        })
+      });
+    },
     props     : {},
     data      : function () {
       return {
-        fields: [
-          {
-            no     : 1,
-            type   : 'text',
-            title  : 'プライベート',
-            payload: {
-              value: '文章文章文章文章文章文章文章文章文章文章文章文章文章文章',
-            }
-          },
-          {
-            no        : 2,
-            isDefining: true,
-            type      : 'text',
-            title     : null,
-          }
-        ]
       }
     },
-    computed  : {},
+    computed  : {
+      logID() {
+        return this.$route.params.logID;
+      },
+      fields() {
+        return this.$store.state[STATE.LOG_EDITING_PAGE_LOG].fields;
+      }
+    },
     methods   : {
       onClickAddField() {
         this.fields.push(this.makeDefaultField())
@@ -105,6 +104,7 @@
       onClickSave() {
         this.$store.dispatch(ACTION.SAVE_LOG, {
           fields: this.fields,
+          logID: this.logID,
         })
       }
     }
