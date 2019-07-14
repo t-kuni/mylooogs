@@ -52,8 +52,8 @@
 
     <div class="tool-area">
       <div class="container">
-        <div class="save-button is-pulled-right">
-          <i class="far fa-save" @click="onClickSave"></i>
+        <div class="save-button is-pulled-right" @click="onClickSave">
+          <i class="far fa-save"></i>
         </div>
       </div>
     </div>
@@ -166,6 +166,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
+    pointer-events: none;
 
     .save-button {
       $size: 80px;
@@ -182,6 +183,8 @@
 
       margin-bottom: 1rem;
       margin-right: 1rem;
+
+      pointer-events: auto;
     }
   }
 </style>
