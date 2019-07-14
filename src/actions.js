@@ -107,7 +107,7 @@ export default {
   [ACTION.LOAD_LOG_BODY]: ({commit, getters, state}, payload) => {
     const logID = payload.logID;
 
-    api.loadLog(logID).then((response) => {
+    return api.loadLog(logID).then((response) => {
       commit(MUTATION.SET_LOG_EDITING_PAGE_LOG, {
         log: response.result
       })

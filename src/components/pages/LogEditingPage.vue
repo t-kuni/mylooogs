@@ -2,61 +2,69 @@
   <div>
     <ex-header class="header"></ex-header>
 
-    <main>
-      <div class="container" v-for="field in fields" :key="field.no">
+    <template v-if="!isLoading">
+      <main>
+        <div class="container" v-for="field in fields" :key="field.no">
 
-        <!-- 定義編集中 -->
-        <template v-if="field.isDefining">
-          <div class="card">
-            <header class="card-header">
-              <p class="card-header-title">
-                <b-input placeholder="項目名" maxlength="200" type="text" expanded v-model="field.title"></b-input>
-              </p>
-            </header>
-            <footer class="card-footer">
-              <a class="card-footer-item" @click="onCancelDefinition(field.no)">キャンセル</a>
-              <a class="card-footer-item" @click="onClickEditDefinitionComplete(field.no)">確定</a>
-            </footer>
-          </div>
-        </template>
-
-        <!-- 定義確定後 -->
-        <template v-else>
-          <div class="card">
-            <header class="card-header">
-              <p class="card-header-title">
-                {{field.title}}
-              </p>
-            </header>
-            <div class="card-content">
-              <div class="content">
-                <b-input maxlength="200" type="textarea" v-model="field.payload.value"></b-input>
-              </div>
+          <!-- 定義編集中 -->
+          <template v-if="field.isDefining">
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title">
+                  <b-input placeholder="項目名" maxlength="200" type="text" expanded v-model="field.title"></b-input>
+                </p>
+              </header>
+              <footer class="card-footer">
+                <a class="card-footer-item" @click="onCancelDefinition(field.no)">キャンセル</a>
+                <a class="card-footer-item" @click="onClickEditDefinitionComplete(field.no)">確定</a>
+              </footer>
             </div>
-            <footer class="card-footer">
-              <a class="card-footer-item" @click="onClickDelete(field.no)">削除</a>
-              <a class="card-footer-item" @click="onClickClear(field.no)">クリア</a>
-              <a class="card-footer-item" @click="onClickEditDefinition(field.no)">定義変更</a>
-            </footer>
-          </div>
-        </template>
-      </div>
-    </main>
+          </template>
 
-    <div class="container add-field-button-area">
-      <div class="button" @click="onClickAddField">
-        <i class="fas fa-plus-circle"></i>
-        追加
-      </div>
-    </div>
+          <!-- 定義確定後 -->
+          <template v-else>
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title">
+                  {{field.title}}
+                </p>
+              </header>
+              <div class="card-content">
+                <div class="content">
+                  <b-input maxlength="200" type="textarea" v-model="field.payload.value"></b-input>
+                </div>
+              </div>
+              <footer class="card-footer">
+                <a class="card-footer-item" @click="onClickDelete(field.no)">削除</a>
+                <a class="card-footer-item" @click="onClickClear(field.no)">クリア</a>
+                <a class="card-footer-item" @click="onClickEditDefinition(field.no)">定義変更</a>
+              </footer>
+            </div>
+          </template>
+        </div>
+      </main>
 
-    <div class="tool-area">
-      <div class="container">
-        <div class="save-button is-pulled-right" @click="onClickSave">
-          <i class="far fa-save"></i>
+      <div class="container add-field-button-area">
+        <div class="button" @click="onClickAddField">
+          <i class="fas fa-plus-circle"></i>
+          追加
         </div>
       </div>
-    </div>
+
+      <div class="tool-area">
+        <div class="container">
+          <div class="save-button is-pulled-right" @click="onClickSave">
+            <i class="far fa-save"></i>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template v-else>
+      <div class="container">
+        通信中・・・
+      </div>
+    </template>
   </div>
 </template>
 
@@ -74,26 +82,35 @@
     },
     beforeRouteEnter(to, from, next) {
       next((vm) => {
+        vm.isLoading = true;
+
         if (vm.hasLogID) {
           vm.$store.dispatch(ACTION.LOAD_LOG_BODY, {
             logID: vm.logID,
+          }).then(() => {
+            vm.isLoading = false;
           })
         } else if (vm.hasBaseID) {
           vm.$store.dispatch(ACTION.LOAD_LOG_BODY, {
             logID: vm.baseID,
+          }).then(() => {
+            vm.isLoading = false;
           })
         } else {
           vm.$store.commit(MUTATION.SET_LOG_EDITING_PAGE_LOG, {
             log: {
               fields: []
             }
-          })
+          });
+          vm.isLoading = false;
         }
       });
     },
     props     : {},
     data      : function () {
-      return {}
+      return {
+        isLoading: false,
+      }
     },
     computed  : {
       logID() {
@@ -182,6 +199,7 @@
 
   .add-field-button-area {
     margin-top: 1rem;
+    margin-bottom: 1rem;
 
     .button {
       display: block;
