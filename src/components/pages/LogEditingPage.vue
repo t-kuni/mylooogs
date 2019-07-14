@@ -14,8 +14,8 @@
               </p>
             </header>
             <footer class="card-footer">
-              <a href="#" class="card-footer-item" @click="onCancelDefinition(field.no)">キャンセル</a>
-              <a href="#" class="card-footer-item" @click="onClickDefine(field.no)">確定</a>
+              <a class="card-footer-item" @click="onCancelDefinition(field.no)">キャンセル</a>
+              <a class="card-footer-item" @click="onClickEditDefinitionComplete(field.no)">確定</a>
             </footer>
           </div>
         </template>
@@ -34,9 +34,9 @@
               </div>
             </div>
             <footer class="card-footer">
-              <a href="#" class="card-footer-item">Save</a>
-              <a href="#" class="card-footer-item">Edit</a>
-              <a href="#" class="card-footer-item">Delete</a>
+              <a class="card-footer-item" @click="onClickDelete(field.no)">削除</a>
+              <a class="card-footer-item" @click="onClickClear(field.no)">クリア</a>
+              <a class="card-footer-item" @click="onClickEditDefinition(field.no)">編集</a>
             </footer>
           </div>
         </template>
@@ -62,15 +62,14 @@
 
 <script>
 
-  import BField from "buefy/src/components/field/Field.vue";
   import BInput from "buefy/src/components/input/Input.vue";
-  import BButton from "buefy/src/components/button/Button.vue";
   import {ACTION} from '../../actions'
   import {STATE} from '../../state'
+  import {MUTATION} from '../../mutations'
   import ExHeader from "../organisms/ExHeader";
 
   export default {
-    components: {ExHeader, BButton, BInput, BField},
+    components: {ExHeader, BInput},
     mounted() {
     },
     beforeRouteEnter(to, from, next) {
@@ -94,43 +93,39 @@
     },
     methods   : {
       onClickAddField() {
-        this.fields.push(this.makeDefaultField())
+        this.$store.commit(MUTATION.ADD_FIELD);
       },
-      makeDefaultField() {
-        return {
-          no        : this.fields.length > 0 ? this.fields.length + 1 : 1,
-          isDefining: true,
-          type      : 'text',
-          title     : '',
-        }
+      onClickEditDefinitionComplete(no) {
+        this.$store.commit(MUTATION.EDIT_FIELD_DEFINITION_COMPLETE, {
+          no,
+        })
       },
-      onClickDefine(no) {
-        this.fields = this.fields.map((field) => {
-          if (field.no !== no) {
-            return field;
-          }
-
-          field.payload    = {
-            value: '',
-          };
-          field.isDefining = false;
-
-          return field;
-        });
-      },
-
       onCancelDefinition(no) {
-        this.fields = this.fields.filter((field) => {
-          return field.no !== no;
-        });
+        this.$store.commit(MUTATION.CANCEL_FIELD_DEFINITION_EDITING, {
+          no,
+        })
       },
-
       onClickSave() {
         this.$store.dispatch(ACTION.SAVE_LOG, {
           fields: this.fields,
           logID : this.logID,
         })
-      }
+      },
+      onClickDelete(no) {
+        this.$store.commit(MUTATION.REMOVE_FIELD, {
+          no,
+        })
+      },
+      onClickClear(no) {
+        this.$store.commit(MUTATION.CLEAR_FIELD, {
+          no,
+        })
+      },
+      onClickEditDefinition(no) {
+        this.$store.commit(MUTATION.EDIT_FIELD_DEFINITION, {
+          no,
+        })
+      },
     }
   }
 </script>

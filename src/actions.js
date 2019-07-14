@@ -112,5 +112,5 @@ export default {
         log: response.result
       })
     });
-  }
+  },
 }
