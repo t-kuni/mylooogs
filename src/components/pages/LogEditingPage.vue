@@ -78,6 +78,10 @@
           vm.$store.dispatch(ACTION.LOAD_LOG_BODY, {
             logID: vm.logID,
           })
+        } else if (vm.hasBaseID) {
+          vm.$store.dispatch(ACTION.LOAD_LOG_BODY, {
+            logID: vm.baseID,
+          })
         } else {
           vm.$store.commit(MUTATION.SET_LOG_EDITING_PAGE_LOG, {
             log: {
@@ -106,6 +110,14 @@
       },
       fields() {
         return this.$store.state[STATE.LOG_EDITING_PAGE_LOG].fields;
+      },
+      hasBaseID() {
+        return 'baseID' in this.$route.query
+          && this.$route.query.baseID !== null
+          && this.$route.query.baseID.length > 0
+      },
+      baseID() {
+        return this.$route.query.baseID;
       }
     },
     methods   : {

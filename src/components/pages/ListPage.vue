@@ -18,7 +18,7 @@
 
     <div class="tool-area">
       <div class="container">
-        <router-link :to="{ name: 'log_creating' }" class="create-button is-pulled-right">
+        <router-link :to="{ name: 'log_creating', query: { baseID: latestLogID }}" class="create-button is-pulled-right">
           <i class="fas fa-plus"></i>
         </router-link>
       </div>
@@ -51,6 +51,13 @@
     computed  : {
       logs() {
         return this.$store.state[STATE.LOGS];
+      },
+      latestLogID() {
+        if (this.$store.state[STATE.LOGS].length === 0) {
+          return null;
+        }
+
+        return this.$store.state[STATE.LOGS][0].id;
       }
     },
     methods   : {}
