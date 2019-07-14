@@ -1,6 +1,5 @@
 import TopPage from './components/pages/TopPage'
 import ListPage from './components/pages/ListPage'
-import LogCreatingPage from "./components/pages/LogCreatingPage";
 import LogEditingPage from "./components/pages/LogEditingPage";
 
 export default [
@@ -17,7 +16,7 @@ export default [
     {
       path: '/log/create',
       name: 'log_creating',
-      component: LogCreatingPage,
+      component: LogEditingPage,
     },
     {
         path: '/log/:logID/edit',

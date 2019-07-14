@@ -36,7 +36,7 @@
             <footer class="card-footer">
               <a class="card-footer-item" @click="onClickDelete(field.no)">削除</a>
               <a class="card-footer-item" @click="onClickClear(field.no)">クリア</a>
-              <a class="card-footer-item" @click="onClickEditDefinition(field.no)">編集</a>
+              <a class="card-footer-item" @click="onClickEditDefinition(field.no)">定義変更</a>
             </footer>
           </div>
         </template>
@@ -74,9 +74,17 @@
     },
     beforeRouteEnter(to, from, next) {
       next((vm) => {
-        vm.$store.dispatch(ACTION.LOAD_LOG_BODY, {
-          logID: vm.logID,
-        })
+        if (vm.hasLogID) {
+          vm.$store.dispatch(ACTION.LOAD_LOG_BODY, {
+            logID: vm.logID,
+          })
+        } else {
+          vm.$store.commit(MUTATION.SET_LOG_EDITING_PAGE_LOG, {
+            log: {
+              fields: []
+            }
+          })
+        }
       });
     },
     props     : {},
@@ -85,7 +93,16 @@
     },
     computed  : {
       logID() {
+        if (!this.hasLogID) {
+          return null;
+        }
+
         return this.$route.params.logID;
+      },
+      hasLogID() {
+        return 'logID' in this.$route.params
+          && this.$route.params.logID !== null
+          && this.$route.params.logID.length > 0
       },
       fields() {
         return this.$store.state[STATE.LOG_EDITING_PAGE_LOG].fields;
@@ -106,10 +123,12 @@
         })
       },
       onClickSave() {
-        this.$store.dispatch(ACTION.SAVE_LOG, {
+        return this.$store.dispatch(ACTION.SAVE_LOG, {
           fields: this.fields,
           logID : this.logID,
-        })
+        }).then(() => {
+          this.$router.push('/list')
+        });
       },
       onClickDelete(no) {
         this.$store.commit(MUTATION.REMOVE_FIELD, {
