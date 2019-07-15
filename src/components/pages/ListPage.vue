@@ -35,15 +35,15 @@
     components: {ExHeader},
     mounted() {
     },
-    // beforeRouteEnter(to, from, next) {
-    //   next((vm) => {
-    //     vm.$store.dispatch(ACTION.LOAD_LOGS);
-    //   });
-    // },
-    // beforeRouteUpdate(to, from, next) {
-    //   next();
-    //   this.$store.dispatch(ACTION.LOAD_LOGS);
-    // },
+    beforeRouteEnter(to, from, next) {
+      next((vm) => {
+        vm.$store.dispatch(ACTION.LOAD_LOGS);
+      });
+    },
+    beforeRouteUpdate(to, from, next) {
+      next();
+      this.$store.dispatch(ACTION.LOAD_LOGS);
+    },
     props     : {},
     data      : function () {
       return {}
