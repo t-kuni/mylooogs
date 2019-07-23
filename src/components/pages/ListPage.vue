@@ -8,7 +8,7 @@
           <div class="card">
             <div class="card-content">
               <div class="content">
-                {{log.name}}
+                {{takeDate(log)}}
               </div>
             </div>
           </div>
@@ -60,7 +60,29 @@
         return this.$store.state[STATE.LOGS][0].id;
       }
     },
-    methods   : {}
+    methods   : {
+      takeDate(log) {
+        const emptyDate = '--年 --月 --日 (--)';
+
+        if (
+          !('properties' in log)
+          || log.properties === null
+          || !('date' in log.properties)
+          || log.properties.date === null
+        ) {
+          return emptyDate;
+        }
+
+        const date = new Date(log.properties.date);
+        const y = date.getFullYear();
+        const m = date.getMonth() + 1;
+        const d = date.getDate();
+        const dow = date.getDay();
+        const dowStr = [ "日", "月", "火", "水", "木", "金", "土" ][dow];
+
+        return `${y}年 ${m}月 ${d}日 (${dowStr})`;
+      }
+    }
   }
 </script>
 
