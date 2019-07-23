@@ -25,16 +25,19 @@ const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/r
 const SCOPES = 'https://www.googleapis.com/auth/drive.metadata https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.appdata';
 
 function initClient() {
+  // @ts-ignore
   gapi.client.init({
     apiKey       : API_KEY,
     clientId     : CLIENT_ID,
     discoveryDocs: DISCOVERY_DOCS,
     scope        : SCOPES
   }).then(function () {
+    // @ts-ignore
     gapi.auth2.getAuthInstance().isSignedIn.listen((isSignedIn) => {
       store.dispatch(isSignedIn ? ACTION.SIGN_IN_COMPLETED : ACTION.SIGN_OUT_COMPLETED);
     });
 
+    // @ts-ignore
     if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
       // TODO: リダイレクト
     }
@@ -43,4 +46,5 @@ function initClient() {
   });
 }
 
+// @ts-ignore
 gapi.load('client:auth2', initClient);
