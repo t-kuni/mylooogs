@@ -1,7 +1,7 @@
 // import axios from "axios";
 
 export default {
-  saveLog(log, id=null) {
+  saveLog(log, props={}, id=null) {
     const url = id !== null
       ? `https://www.googleapis.com/upload/drive/v3/files/${id}?uploadType=multipart&fields=id`
       : `https://www.googleapis.com/upload/drive/v3/files/?uploadType=multipart&fields=id`;
@@ -12,6 +12,7 @@ export default {
     const metadata    = {
       'name'    : fileName,
       'mimeType': 'application/json',
+      'properties': props,
     };
 
     if (id == null) {
@@ -38,7 +39,7 @@ export default {
   loadLogs() {
     return gapi.client.drive.files.list({
       spaces: 'appDataFolder',
-      fields: 'nextPageToken, files(id, name)',
+      fields: 'nextPageToken, files(id, name, properties)',
       pageSize: 10
     })
   },

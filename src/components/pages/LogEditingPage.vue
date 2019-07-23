@@ -4,6 +4,19 @@
 
     <template v-if="!isLoading">
       <main>
+
+        <!-- 日付 -->
+        <div class="container">
+          <b-field label="日付">
+            <b-datepicker
+              placeholder="Click to select..."
+              icon="calendar-today"
+              v-model="date"
+            >
+            </b-datepicker>
+          </b-field>
+        </div>
+
         <div class="container" v-for="field in fields" :key="field.no">
 
           <!-- 定義編集中 -->
@@ -84,25 +97,37 @@
       next((vm) => {
         vm.isLoading = true;
 
-        if (vm.hasLogID) {
+        if (vm.hasLogID) { // 既存のログの修正
           vm.$store.dispatch(ACTION.LOAD_LOG_BODY, {
             logID: vm.logID,
           }).then(() => {
             vm.isLoading = false;
+
+            // ストアから状態を取り込む
+            vm.date = vm.$store.state[STATE.LOG_EDITING_PAGE_LOG_DATE];
           })
-        } else if (vm.hasBaseID) {
+        } else if (vm.hasBaseID) { // 新規作成（既存のログをクローン）
           vm.$store.dispatch(ACTION.LOAD_LOG_BODY, {
             logID: vm.baseID,
           }).then(() => {
             vm.isLoading = false;
+
+            // ストアから状態を取り込む
+            vm.date = new Date();
           })
-        } else {
+        } else { // 新規作成
           vm.$store.commit(MUTATION.SET_LOG_EDITING_PAGE_LOG, {
             log: {
-              fields: []
+              fields: [],
             }
           });
+          vm.$store.commit(MUTATION.SET_LOG_EDITING_PAGE_LOG_DATE, {
+            date: new Date(),
+          });
           vm.isLoading = false;
+
+          // ストアから状態を取り込む
+          vm.date = vm.$store.state[STATE.LOG_EDITING_PAGE_LOG_DATE];
         }
       });
     },
@@ -110,6 +135,7 @@
     data      : function () {
       return {
         isLoading: false,
+        date     : null,
       }
     },
     computed  : {
@@ -152,9 +178,14 @@
         })
       },
       onClickSave() {
+        if (!this.validate()) {
+          return;
+        }
+
         return this.$store.dispatch(ACTION.SAVE_LOG, {
           fields: this.fields,
           logID : this.logID,
+          date : this.date,
         }).then(() => {
           this.$router.push('/list')
         });
@@ -174,6 +205,19 @@
           no,
         })
       },
+      validate() {
+        if (this.date === null) {
+          this.$toast.open({
+            message: '日付は必須です',
+            position: 'is-bottom',
+            type: 'is-danger'
+          });
+
+          return false;
+        }
+
+        return true;
+      }
     }
   }
 </script>

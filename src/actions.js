@@ -41,11 +41,19 @@ export default {
   [ACTION.SAVE_LOG]: ({commit, getters, state}, payload) => {
     const fields = payload.fields;
     const logID = 'logID' in payload ? payload.logID : null;
+    const date = payload.date;
 
-    api.saveLog({
+    const log = {
       createdAt: (new Date()).toISOString(),
       fields,
-    }, logID);
+      date: date.toISOString(),
+    };
+
+    const properties = {
+      date: date.toISOString(),
+    };
+
+    api.saveLog(log, properties, logID);
   },
 
   [ACTION.LOAD_LOGS]: ({commit, getters, state}, payload) => {
@@ -61,9 +69,15 @@ export default {
     const logID = payload.logID;
 
     return api.loadLog(logID).then((response) => {
+      const log = response.result;
+
       commit(MUTATION.SET_LOG_EDITING_PAGE_LOG, {
-        log: response.result
-      })
+        log,
+      });
+
+      commit(MUTATION.SET_LOG_EDITING_PAGE_LOG_DATE, {
+        date: ('date' in log) ? new Date(log.date) : null,
+      });
     });
   },
 }
