@@ -8,7 +8,7 @@ export default {
 
     const fileContent = JSON.stringify(log); // As a sample, upload a text file.
     const file        = new Blob([fileContent], {type: 'text/plain'});
-    const fileName = 'log-' + log.createdAt;
+    const fileName = 'log-' + log.date;
     const metadata    = {
       'name'    : fileName,
       'mimeType': 'application/json',
@@ -40,6 +40,8 @@ export default {
     return gapi.client.drive.files.list({
       spaces: 'appDataFolder',
       fields: 'nextPageToken, files(id, name, properties)',
+      orderBy: "name desc",
+      q: "name contains 'log-'",
       pageSize: 10
     })
   },

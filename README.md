@@ -32,3 +32,8 @@ npm run test:unit
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Documents
+
+### Google Drive API
+https://developers.google.com/drive/api/v3/reference/files?hl=ja
