@@ -44,7 +44,7 @@
               </header>
               <div class="card-content">
                 <div class="content">
-                  <b-input maxlength="200" type="textarea" v-model="field.payload.value"></b-input>
+                  <b-input rows="6" type="textarea" v-model="field.payload.value"></b-input>
                 </div>
               </div>
               <footer class="card-footer">
