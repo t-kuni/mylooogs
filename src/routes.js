@@ -1,6 +1,7 @@
 import TopPage from './components/pages/TopPage'
 import ListPage from './components/pages/ListPage'
 import LogEditingPage from "./components/pages/LogEditingPage";
+import NotFoundPage from "./components/pages/NotFoundPage";
 
 export default [
     {
@@ -23,4 +24,8 @@ export default [
         name: 'log_editing',
         component: LogEditingPage,
     },
+    {
+      path: '*',
+      component: NotFoundPage
+    }
 ]
