@@ -21,6 +21,7 @@
     },
     methods   : {
       onClickStart() {
+        console.log(this.$store.actions);
         this.$store.dispatch(ACTION.SIGN_IN, {});
       },
     }

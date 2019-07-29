@@ -1,4 +1,6 @@
 export const STATE = {
+  SIGNED_IN: 'signed_in',
+
   LOGS: 'logs',
 
   LOG_EDITING_PAGE_LOG: 'log_editing_page_log',
@@ -6,6 +8,7 @@ export const STATE = {
 };
 
 export const defaultState = {
+  [STATE.SIGNED_IN]: false,
   [STATE.LOGS]: [],
 
   [STATE.LOG_EDITING_PAGE_LOG]: {

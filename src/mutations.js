@@ -1,6 +1,8 @@
 import {STATE} from "./state";
 
 export const MUTATION = {
+  SET_SIGN_IN_FLAG: 'set_sign_in_flag',
+
   PUSH_LOGS: 'push_logs',
 
   SET_LOG_EDITING_PAGE_LOG     : 'set_log_editing_page_log',
@@ -15,6 +17,10 @@ export const MUTATION = {
 };
 
 export default {
+  [MUTATION.SET_SIGN_IN_FLAG]: (state, payload) => {
+    state[STATE.SIGNED_IN] = payload.signedIn;
+  },
+
   [MUTATION.PUSH_LOGS]: (state, payload) => {
     state[STATE.LOGS] = state[STATE.LOGS].concat(payload.files);
   },

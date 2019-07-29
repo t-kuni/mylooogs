@@ -37,9 +37,14 @@ function initClient() {
       store.dispatch(isSignedIn ? ACTION.SIGN_IN_COMPLETED : ACTION.SIGN_OUT_COMPLETED);
     });
 
+    // 起動時のログイン状態
     // @ts-ignore
-    if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
-      // TODO: リダイレクト
+    if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
+      if (router.currentRoute.name === 'top') {
+        router.push('/list');
+      }
+    } else {
+      router.push('/');
     }
 
     vue.$mount('#app');

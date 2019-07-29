@@ -1,3 +1,5 @@
+import {STATE} from "./state";
+import store from './store';
 import TopPage from './components/pages/TopPage'
 import ListPage from './components/pages/ListPage'
 import LogEditingPage from "./components/pages/LogEditingPage";
@@ -8,6 +10,13 @@ export default [
         path: '/',
         name: 'top',
         component: TopPage,
+        beforeEnter: (to, from, next) => {
+          if (store.state[STATE.SIGNED_IN]) {
+            next('/list');
+          } else {
+            next();
+          }
+        }
     },
     {
         path: '/list',

@@ -1,7 +1,5 @@
 import {MUTATION} from "./mutations";
-import {STATE} from "./state";
 import api from './api';
-import router from './router'
 
 export const ACTION = {
   INIT_APP: 'init_app',
@@ -32,10 +30,15 @@ export default {
   },
 
   [ACTION.SIGN_IN_COMPLETED]: ({commit, getters, state, dispatch}, payload) => {
+    commit(MUTATION.SET_SIGN_IN_FLAG, {
+      signedIn: true,
+    });
   },
 
   [ACTION.SIGN_OUT_COMPLETED]: ({commit, getters, state}, payload) => {
-    router.push('/');
+    commit(MUTATION.SET_SIGN_IN_FLAG, {
+      signedIn: false,
+    });
   },
 
   [ACTION.SAVE_LOG]: ({commit, getters, state}, payload) => {
