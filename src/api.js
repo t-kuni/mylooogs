@@ -42,7 +42,7 @@ export default {
       fields: 'nextPageToken, files(id, name, properties)',
       orderBy: "name desc",
       q: "name contains 'log-'",
-      pageSize: 10
+      pageSize: 100
     })
   },
 
