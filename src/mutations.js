@@ -8,6 +8,9 @@ export const MUTATION = {
   SET_LOG_EDITING_PAGE_LOG     : 'set_log_editing_page_log',
   SET_LOG_EDITING_PAGE_LOG_DATE: 'set_log_editing_page_log_date',
 
+  SET_LOG_VIEW_PAGE_LOG     : 'set_log_view_page_log',
+  SET_LOG_VIEW_PAGE_LOG_DATE: 'set_log_view_page_log_date',
+
   REMOVE_FIELD                   : 'remove_field',
   CLEAR_FIELD                    : 'clear_field',
   ADD_FIELD                      : 'add_field',
@@ -138,5 +141,13 @@ export default {
 
   [MUTATION.SET_LOG_EDITING_PAGE_LOG_DATE]: (state, payload) => {
     state[STATE.LOG_EDITING_PAGE_LOG_DATE] = payload.date;
+  },
+
+  [MUTATION.SET_LOG_VIEW_PAGE_LOG]: (state, payload) => {
+    state[STATE.LOG_VIEW_PAGE_LOG] = payload.log;
+  },
+
+  [MUTATION.SET_LOG_VIEW_PAGE_LOG_DATE]: (state, payload) => {
+    state[STATE.LOG_VIEW_PAGE_LOG_DATE] = payload.date;
   },
 }

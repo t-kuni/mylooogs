@@ -4,6 +4,8 @@ import TopPage from './components/pages/TopPage'
 import ListPage from './components/pages/ListPage'
 import LogEditingPage from "./components/pages/LogEditingPage";
 import NotFoundPage from "./components/pages/NotFoundPage";
+import ViewListPage from "./components/pages/ViewListPage";
+import LogViewPage from "./components/pages/LogViewPage";
 
 export default [
     {
@@ -32,6 +34,16 @@ export default [
         path: '/log/:logID/edit',
         name: 'log_editing',
         component: LogEditingPage,
+    },
+    {
+      path: '/view-list',
+      name: 'view-list',
+      component: ViewListPage,
+    },
+    {
+      path: '/log/:logID',
+      name: 'log_view',
+      component: LogViewPage,
     },
     {
       path: '*',

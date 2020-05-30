@@ -77,8 +77,14 @@ export default {
       commit(MUTATION.SET_LOG_EDITING_PAGE_LOG, {
         log,
       });
+      commit(MUTATION.SET_LOG_VIEW_PAGE_LOG, {
+        log,
+      });
 
       commit(MUTATION.SET_LOG_EDITING_PAGE_LOG_DATE, {
+        date: ('date' in log) ? new Date(log.date) : null,
+      });
+      commit(MUTATION.SET_LOG_VIEW_PAGE_LOG_DATE, {
         date: ('date' in log) ? new Date(log.date) : null,
       });
     });

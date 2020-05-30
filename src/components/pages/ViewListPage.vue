@@ -4,7 +4,7 @@
 
     <main>
       <div class="container" v-for="log in logs" :key="log.id">
-        <router-link :to="{ name: 'log_editing', params: { logID: log.id }}">
+        <router-link :to="{ name: 'log_view', params: { logID: log.id }}">
           <div class="card">
             <div class="card-content">
               <div class="content">

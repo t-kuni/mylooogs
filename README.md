@@ -1,5 +1,9 @@
 # mylooogs
 
+hostsに`local.mylooogs.link`を追加する必要がある。  
+ポートは`8080`にする必要がある。（OAuthの都合で。）
+
+
 ## Project setup
 ```
 npm install
