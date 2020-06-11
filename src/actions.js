@@ -60,7 +60,7 @@ export default {
   },
 
   [ACTION.LOAD_LOGS]: ({commit, getters, state}, payload) => {
-    api.loadLogs().then((response) => {
+    return api.loadLogs().then((response) => {
       console.log(response);
       commit(MUTATION.PUSH_LOGS, {
         files: response.result.files
