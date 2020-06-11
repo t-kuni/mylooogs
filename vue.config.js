@@ -8,5 +8,11 @@ module.exports = {
       'Access-Control-Allow-Methods': 'GET,POST,HEAD,OPTIONS',
       'Access-Control-Allow-Origin': '*',
     }
+  },
+  pwa: {
+    workboxPluginMode: 'GenerateSW',
+    workboxOptions: {
+      exclude: /_redirects/
+    }
   }
 }
